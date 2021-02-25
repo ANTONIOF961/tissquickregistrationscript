@@ -587,7 +587,9 @@
     self.getExamLabel = function (nameOfExam) {
         return $(".groupWrapper .header_element span").filter(function () {
             var tmp = $(this).text().trim();
-            return tmp.match(nameOfExam);
+            let exam = nameOfExam.trim();
+            return tmp === exam;
+            // return tmp.match(nameOfExam);
         });
     };
 
