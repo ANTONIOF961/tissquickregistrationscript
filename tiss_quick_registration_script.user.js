@@ -77,22 +77,25 @@
         scriptEnabled: true,
 
         // define here the type of registration [lva,group,exam]
-        registrationType: "group",
+        registrationType: "exam",
 
         // name of you the group you want to join (only for registrationType 'group') [String]
-        nameOfGroup: "Gruppe 001",
+        nameOfGroup: "Gruppe 1",
 
         // name of the exam which you want to join (only for registrationType 'exam') [String]
-        nameOfExam: "Name Of Exam",
+        nameOfExam: "Prüfung ONLINE 19.04.21 14-16h",
+
+        // checks if the name has to be exact to avoid multiple entries when this is not the desired behaviour
+        nameOfExamExact: true,
 
         // date of the exam which you want to join, especially when there are multiple exams with the same name (only for registrationType 'exam') [String]
-        dateOfExam: '',
+        dateOfExam: '19.04.2021',
 
         // checks if you are at the correct lva page
         lvaCheckEnabled: true,
 
         // only if the number is right, the script is enabled [String]
-        lvaNumber: "123.456",
+        lvaNumber: "308.860",
 
         // if you have multiple study codes, enter here the study code number you want
         // to register for eg. '123456' (no blanks). Otherwise leave empty. [String]
@@ -104,7 +107,7 @@
         lvaSemesterCheckEnabled: true,
 
         // only if the semester is right, the script is enabled [String]
-        lvaSemester: "2019W",
+        lvaSemester: "2021S",
 
         // autoGoToSemester: true,   // coming soon
 
@@ -136,7 +139,7 @@
         // define the specific time the script should start [Date]
         // new Date(year, month, day, hours, minutes, seconds, milliseconds)
         // note: months start with 0
-        specificStartTime: new Date(2020, 1 - 1, 9, 20, 27, 0, 0),
+        specificStartTime: new Date(2021, 4-1, 1, 9, 59, 30, 0),
 
         // if a specific time is defined, the script will refresh some ms sooner to adjust a delay [Integer]
         delayAdjustmentInMs: 300,
@@ -186,6 +189,7 @@
                         }
                     } else {
                         var examLabel = self.doExamCheck();
+
                         if (examLabel !== null) {
                             self.highlight(examLabel);
                             self.pageLog("Prüfung: " + examLabel.text().trim());
@@ -587,8 +591,10 @@
     self.getExamLabel = function (nameOfExam) {
         return $(".groupWrapper .header_element span").filter(function () {
             var tmp = $(this).text().trim();
-            let exam = nameOfExam.trim();
-            return tmp === exam;
+            let exam = nameOfExam.trim()
+            const t = tmp.match(nameOfExam)
+            return t
+            //return tmp === exam
             // return tmp.match(nameOfExam);
         });
     };
@@ -648,6 +654,21 @@
     self.doExamCheck = function () {
         var examLabel = self.getExamLabel(options.nameOfExam);
         var examData = self.getExamDate(options.nameOfExam, options.dateOfExam);
+
+        // get all valid numbers in keys +n == +n self check if valid number
+        const keys = Object.keys(examData).filter(el => +el == +el)
+
+        // delete key from object if option exact exam is toggled
+        if (options.nameOfExamExact){
+            keys.forEach(function(el){
+                const span = examData[el].getElementsByTagName("span")[0]
+                const spanLabel = span.innerHTML.trim()
+                if(!options.nameOfExam.trim().match(spanLabel)){
+                    delete examData[el]
+                }
+            })
+        }
+
         if (examLabel.length === 0) {
             self.pageOut('exam not found error: ' + options.nameOfExam);
             return null;
