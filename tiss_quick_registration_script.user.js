@@ -77,29 +77,29 @@
         scriptEnabled: true,
 
         // define here the type of registration [lva,group,exam]
-        registrationType: "exam",
+        registrationType: "group",
 
         // name of you the group you want to join (only for registrationType 'group') [String]
-        nameOfGroup: "Gruppe 1",
+        nameOfGroup: "Gruppe Prof. Bauer 5",
 
         // name of the exam which you want to join (only for registrationType 'exam') [String]
-        nameOfExam: "Prüfung ONLINE 19.04.21 14-16h",
+        nameOfExam: "Gruppe Prof. Bauer 5",
 
         // checks if the name has to be exact to avoid multiple entries when this is not the desired behaviour
         nameOfExamExact: true,
 
         // date of the exam which you want to join, especially when there are multiple exams with the same name (only for registrationType 'exam') [String]
-        dateOfExam: '19.04.2021',
+        dateOfExam: ' ',
 
         // checks if you are at the correct lva page
         lvaCheckEnabled: true,
 
         // only if the number is right, the script is enabled [String]
-        lvaNumber: "308.860",
+        lvaNumber: "254.037",
 
         // if you have multiple study codes, enter here the study code number you want
         // to register for eg. '123456' (no blanks). Otherwise leave empty. [String]
-        studyCode: '',
+        studyCode: ' ',
 
         // autoGoToLVA: true,        // coming soon
 
@@ -139,7 +139,7 @@
         // define the specific time the script should start [Date]
         // new Date(year, month, day, hours, minutes, seconds, milliseconds)
         // note: months start with 0
-        specificStartTime: new Date(2021, 4-1, 1, 9, 59, 30, 0),
+        specificStartTime: new Date(2021, 3, 27, 11, 20, 30, 0),
 
         // if a specific time is defined, the script will refresh some ms sooner to adjust a delay [Integer]
         delayAdjustmentInMs: 300,
